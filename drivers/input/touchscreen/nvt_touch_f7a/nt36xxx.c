@@ -1362,9 +1362,9 @@ static int32_t nvt_ts_probe(struct i2c_client *client, const struct i2c_device_i
 		NVT_LOG("int_trigger_type=%d\n", ts->int_trigger_type);
 
 #if WAKEUP_GESTURE
-       		ret = request_threaded_irq(client->irq, NULL, nvt_ts_irq_handler, ts->int_trigger_type | IRQF_ONESHOT | IRQF_NO_SUSPEND, client->name, ts);
+       		ret = request_threaded_irq(client->irq, NULL, nvt_ts_irq_handler, ts->int_trigger_type | IRQF_ONESHOT | IRQF_PERF_CRITICAL |IRQF_NO_SUSPEND, client->name, ts);
 #else
-     		ret = request_threaded_irq(client->irq, NULL, nvt_ts_irq_handler, ts->int_trigger_type | IRQF_ONESHOT, client->name, ts);
+     		ret = request_threaded_irq(client->irq, NULL, nvt_ts_irq_handler, ts->int_trigger_type | IRQF_PERF_CRITICAL | IRQF_ONESHOT, client->name, ts);
 #endif
 		if (ret != 0) {
 			NVT_ERR("request irq failed. ret=%d\n", ret);
